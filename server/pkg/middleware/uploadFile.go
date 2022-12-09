@@ -13,10 +13,7 @@ import (
 
 func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Upload file
-		// FormFile returns the first file for the given key `myFile`
-		// it also returns the FileHeader so we can get the Filename,
-		// the Header and the size of the file
+
 		file, _, err := r.FormFile("image")
 
 		if err != nil && r.Method == "PATCH" {
@@ -69,7 +66,6 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// Create a temporary file within our temp-images directory that follows
 		// a particular naming pattern
 		tempFile, err := ioutil.TempFile("uploads", "image-*.png")
 		if err != nil {
@@ -80,8 +76,6 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 		}
 		defer tempFile.Close()
 
-		// read all of the contents of our uploaded file into a
-		// byte array
 		fileBytes, err := ioutil.ReadAll(file)
 		if err != nil {
 			fmt.Println(err)

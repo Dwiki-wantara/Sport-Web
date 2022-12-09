@@ -27,7 +27,7 @@ func (r *repository) FindArticles() ([]models.Article, error) {
 
 func (r *repository) GetArticle(ID int) (models.Article, error) {
 	var product models.Article
-	// not yet using category relation, cause this step doesnt Belong to Many
+
 	err := r.db.Preload("User").First(&product, ID).Error
 
 	return product, err

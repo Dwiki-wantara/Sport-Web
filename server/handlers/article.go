@@ -119,8 +119,8 @@ func (h *handlerArticle) UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	// // get image filename
-	// dataContex := r.Context().Value("dataFile")
-	// filename := dataContex.(string)
+	dataContex := r.Context().Value("dataFile")
+	filename := dataContex.(string)
 
 	request := articledto.ArticleRequest{
 		Author: r.FormValue("author"),
@@ -142,6 +142,7 @@ func (h *handlerArticle) UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	article.Author = request.Author
 	article.Title = request.Title
 	article.Body = request.Body
+	article.Image = filename
 
 	article, err = h.ArticleRepository.UpdateArticle(article)
 	if err != nil {
